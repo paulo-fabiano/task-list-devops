@@ -1,0 +1,27 @@
+pipeline {
+
+    agent none
+
+    stages {
+        // Build da Imagem Docker
+        stage('Build Backend') { 
+            agent {
+                docker {
+                    image 'openjdk:27-ea-slim'
+                }
+            }
+
+            // Steps
+            steps {
+               sh 'mvn clean install -DskipTests -Dmaven.test.skip=true -Dmaven.build.dest=/app/target' 
+            }
+        }
+
+    }
+
+    post {
+        success { ... }
+        failure { ... }
+        always { ... }
+    }
+}
