@@ -1,0 +1,33 @@
+services:
+  frontend:
+    image:
+    container_name: task-list-frontend
+    restart: on-failure
+    # ---- Max memory ---- #
+    mem_limit: 256m      
+    # ---- Number of CPU cores ---- #
+    cpus: 0.2  
+    ports:
+      - "3000:3000"
+    networks:
+      - task-list
+
+  backend:
+    image: 
+    container_name: task-list-frontend
+    restart: on-failure
+    # ---- Max memory ---- #
+    mem_limit: 512m      
+    # ---- Soft limit ---- #  
+    mem_reservation: 256m  
+    # ---- Number of CPU cores ---- #
+    cpus: 0.2              
+    ports:
+      - "8080:8080"
+    networks:
+      - task-list
+
+networks:
+  task-list:
+  name: task-list-devops
+  driver: bridge

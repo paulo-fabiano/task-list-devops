@@ -1,0 +1,27 @@
+# Service do Frontend da aplicação
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: lista-tarefas
+spec:
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: ClusterIP 
+---
+# Service do Backend da aplicação
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: lista-tarefas
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP
