@@ -2,12 +2,12 @@ pipeline {
 
     agent {
         docker {
-            image: 'paulofabianoo/dind-ci'
-            args:  '--rm --privileged'
+            image 'paulofabianoo/dind-ci'
+            args  '--rm --privileged'
         }
     }
 
-    enviroment {
+    environment {
         REPOSITORY_DOCKER_HUB   =   'paulofabianoo'
         APPLICATION_NAME        =   'task-list-frontend'
     }
