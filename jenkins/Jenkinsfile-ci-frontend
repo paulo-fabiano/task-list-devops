@@ -1,0 +1,59 @@
+pipeline {
+
+    agent {
+        docker {
+            image: 'paulofabianoo/dind-ci'
+            args:  '--rm --privileged'
+        }
+    }
+
+    enviroment {
+        REPOSITORY_DOCKER_HUB   =   'paulofabianoo'
+        APPLICATION_NAME        =   'task-list-frontend'
+    }
+
+    stages {
+
+        stage('Build Frontend') { 
+            
+            steps {
+
+                script {
+
+                    def APPLICATION_VERSION = "${currentBuild.number}"
+                    def IMAGE_NAME          = "${env.REPOSITORY_DOCKER_HUB}/${APPLICATION_NAME}:${APPLICATION_VERSION}"
+                    def IMAGE_LATEST        = "${env.REPOSITORY_DOCKER_HUB}/${APPLICATION_NAME}:latest"
+
+                    sh """
+                        cd /frontend
+                        docker build -t ${IMAGE_NAME} .
+                        docker tag ${IMAGE_NAME} ${IMAGE_LATEST}
+                    """
+                }
+
+            }
+            
+        }
+        
+        stage('Push image') {
+
+            steps {
+
+                withCredentials([
+                    usernamePassword(credentialsId: 'docker-hub-login', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')
+                ]) {
+
+                    script {
+                        sh """
+                            docker login -u ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+                            docker push ${env.IMAGE_NAME} && docker push ${env.IMAGE_LATEST}
+                        """
+                    }
+
+                }
+            }
+        }
+
+    }
+
+}
