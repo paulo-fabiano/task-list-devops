@@ -5,7 +5,7 @@ COPY . .
 RUN mvn clean install -DskipTests -Dmaven.test.skip=true -Dmaven.build.dest=/app/target
 
 # Aplication
-FROM openjdk:17
+FROM eclipse-temurin:17.0.17_10-jre-jammy
 
 WORKDIR /app
 

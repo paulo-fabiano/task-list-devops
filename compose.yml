@@ -1,0 +1,45 @@
+services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    container_name: task-list-frontend
+    restart: on-failure
+    mem_limit: 256m      
+    cpus: 0.2  
+    # ports:
+    #   - "3000:3000"
+    networks:
+      - task-list
+
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    container_name: task-list-backend
+    restart: on-failure
+    mem_limit: 512m      
+    mem_reservation: 256m  
+    cpus: 0.2              
+    # ports:
+    #   - "8080:8080"
+    networks:
+      - task-list
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: on-failure
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    networks:
+      - task-list
+    depends_on:
+      - backend
+
+networks:
+  task-list:
+    name: task-list-devops
+    driver: bridge

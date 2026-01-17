@@ -1,3 +1,5 @@
+const BACKEND_URI = window.__ENV__.BACKEND_URI;
+
 let tarefas = [];
 
 function renderizarTabela() {
@@ -74,7 +76,7 @@ function adicionarTarefa() {
 
   const novaTarefa = { nome, prioridade, realizado: false };
 
-  axios.post(`${BACKEND_URL}/api/tarefa`, novaTarefa)
+  axios.post(`${BACKEND_URI}/api/tarefa`, novaTarefa)
     .then(res => {
       const tarefaComId = res.data;
       tarefas.push({ ...tarefaComId, editando: false });
@@ -91,7 +93,7 @@ function adicionarTarefa() {
 function salvarEdicao(index) {
   const tarefa = tarefas[index];
 
-  axios.put(`${BACKEND_URL}/api/tarefa/atualizar/${tarefa.id}`, {
+  axios.put(`${BACKEND_URI}/api/tarefa/atualizar/${tarefa.id}`, {
     nome: tarefa.nome,
     prioridade: tarefa.prioridade,
     realizado: tarefa.realizado
@@ -109,7 +111,7 @@ function alternarStatus(index) {
   const tarefa = tarefas[index];
   tarefa.realizado = !tarefa.realizado;
 
-  axios.put(`${BACKEND_URL}/api/tarefa/atualizar/${tarefa.id}`, { realizado: tarefa.realizado })
+  axios.put(`${BACKEND_URI}/api/tarefa/atualizar/${tarefa.id}`, { realizado: tarefa.realizado })
     .then(() => renderizarTabela())
     .catch(err => {
       console.error('Erro ao atualizar status:', err);
@@ -119,7 +121,7 @@ function alternarStatus(index) {
 function apagarTarefa(index) {
   const tarefa = tarefas[index];
 
-  axios.delete(`${BACKEND_URL}/api/tarefa/deletar/${tarefa.id}`)
+  axios.delete(`${BACKEND_URI}/api/tarefa/deletar/${tarefa.id}`)
     .then(() => {
       tarefas.splice(index, 1);
       renderizarTabela();
@@ -130,7 +132,7 @@ function apagarTarefa(index) {
 }
 
 function carregarTarefas() {
-  axios.get(`${BACKEND_URL}/api/tarefas`)
+  axios.get(`${BACKEND_URI}/api/tarefas`)
     .then(res => {
       tarefas = res.data.map(t => ({ ...t, editando: false }));
       renderizarTabela();
