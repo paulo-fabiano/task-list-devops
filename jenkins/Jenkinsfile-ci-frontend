@@ -25,7 +25,8 @@ pipeline {
                     def IMAGE_LATEST        = "${env.REPOSITORY_DOCKER_HUB}/${APPLICATION_NAME}:latest"
 
                     sh """
-                        docker build -t ${IMAGE_NAME} -f frontend/Dockerfile frontend
+                        cd frontend
+                        docker build -t ${IMAGE_NAME} .
                         docker tag ${IMAGE_NAME} ${IMAGE_LATEST}
                     """
                 }
