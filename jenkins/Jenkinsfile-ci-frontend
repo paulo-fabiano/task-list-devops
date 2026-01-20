@@ -3,7 +3,7 @@ pipeline {
     agent {
         docker {
             image 'paulofabianoo/dind-ci'
-            args  '--rm --privileged'
+            args  '--rm --privileged -u root'
         }
     }
 
