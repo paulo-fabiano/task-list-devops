@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-domain-task-list-devops
+  namespace: task-list-devops
+data:
+  config.domain: |
+    window.__ENV__ = {
+      BACKEND_URI: "http://task-list-devops.192.168.122.22.nip.io"
+    };

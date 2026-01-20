@@ -50,6 +50,17 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 2
+          volumeMounts: 
+            - name: config-domain
+              mountPath: /app/public/config.js
+              subPath: config.js
+      volumes:
+        - name: config-domain
+          configMap:
+            name: config-domain-task-list-devops
+            items:
+              - key: config.domain
+                path: config.js
 ---
 apiVersion: apps/v1
 kind: Deployment

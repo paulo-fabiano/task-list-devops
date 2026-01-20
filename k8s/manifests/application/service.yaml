@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: web
+  name: web-task-list-devops
   namespace: task-list-devops
 spec:
   selector:
     app: web
   ports:
-    - port: 3000
+    - port: 80
       targetPort: 3000
   type: ClusterIP 
 ---
@@ -16,7 +16,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: backend-task-list-devops
   namespace: task-list-devops
 spec:
   selector:
