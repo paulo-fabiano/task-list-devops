@@ -5,7 +5,7 @@ metadata:
   namespace: task-list-devops
 spec: 
   rules:
-    - host: task-list-devops.<IP>.nip.io
+    - host: task-list-devops.192.168.122.22.nip.io
       http:
         paths:
           - path: /

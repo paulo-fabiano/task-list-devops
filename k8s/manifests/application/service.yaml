@@ -17,7 +17,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backend
-  namespace: v
+  namespace: task-list-devops
 spec:
   selector:
     app: backend
