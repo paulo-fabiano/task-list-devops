@@ -18,6 +18,38 @@ spec:
           image: paulofabianoo/task-list-frontend
           ports:
             - containerPort: 3000
+              name: web
+          resources: 
+            requests:
+              memory: 100Mi
+              cpu: 100m
+            limits:
+              memory: 500Mi
+              cpu: 500m
+          imagePullPolicy: IfNotPresent
+          startupProbe:
+            httpGet:
+              port: web
+              path: /
+              scheme: HTTP  
+            failureThreshold: 18
+            periodSeconds: 10
+          readinessProbe:
+            httpGet: 
+              port: web
+              path: /
+              scheme: HTTP  
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 2
+          livenessProbe:
+            httpGet: 
+              port: web
+              path: /
+              scheme: HTTP    
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 2
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,3 +71,35 @@ spec:
           image: paulofabianoo/task-list-backend
           ports:
             - containerPort: 8080
+              name: backend
+          resources: 
+            requests:
+              memory: 100Mi
+              cpu: 100m
+            limits:
+              memory: 500Mi
+              cpu: 500m
+          imagePullPolicy: IfNotPresent
+          startupProbe:
+            httpGet:
+              port: backend
+              path: /api/tarefas
+              scheme: HTTP  
+            failureThreshold: 18
+            periodSeconds: 10
+          readinessProbe:
+            httpGet: 
+              port: backend
+              path: /api/tarefas
+              scheme: HTTP  
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 2
+          livenessProbe:
+            httpGet: 
+              port: backend
+              path: /api/tarefas
+              scheme: HTTP    
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 2
