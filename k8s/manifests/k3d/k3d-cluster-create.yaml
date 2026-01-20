@@ -1,7 +1,10 @@
 apiVersion: k3d.io/v1alpha5
 kind: Simple
-name: task-list-devops
+metadata:
+  name: task-list-devops
 servers: 1
 agents: 2
 ports:
-  - port: 80:80@loadbalancer
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
