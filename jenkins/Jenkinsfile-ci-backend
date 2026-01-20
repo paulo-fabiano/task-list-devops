@@ -10,7 +10,7 @@ pipeline {
     environment {
         REPOSITORY_DOCKER_HUB   =   'paulofabianoo'
         APPLICATION_NAME        =   'task-list-backend'
-        IMAGE_NAME              =   "${env.REPOSITORY_DOCKER_HUB}/${APPLICATION_NAME}:${APPLICATION_VERSION}"
+        IMAGE_NAME              =   "${env.REPOSITORY_DOCKER_HUB}/${APPLICATION_NAME}:${BUILD_NUMBER}"
         IMAGE_LATEST            =   "${env.REPOSITORY_DOCKER_HUB}/${APPLICATION_NAME}:latest" 
     }
 
