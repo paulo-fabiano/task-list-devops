@@ -1,23 +1,23 @@
-# Service do Frontend da aplicação
+# ---- Frontend ---- #
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-service
-  namespace: lista-tarefas
+  name: web
+  namespace: task-list-devops
 spec:
   selector:
-    app: frontend
+    app: web
   ports:
-    - port: 80
+    - port: 3000
       targetPort: 3000
   type: ClusterIP 
 ---
-# Service do Backend da aplicação
+# ---- Backend ---- #
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-service
-  namespace: lista-tarefas
+  name: backend
+  namespace: v
 spec:
   selector:
     app: backend

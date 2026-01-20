@@ -1,34 +1,29 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: lista-tarefas
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
-  namespace: lista-tarefas
+  name: web-task-list-devops
+  namespace: task-list-devops
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      app: web
   template:
     metadata:
       labels:
-        app: frontend
+        app: web
     spec:
       containers:
-        - name: frontend
-          image: pfabianofilho/front-lista-tarefas:v1
+        - name: web
+          image: paulofabianoo/task-list-frontend
           ports:
             - containerPort: 3000
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
-  namespace: lista-tarefas
+  name: backend-task-list-devops
+  namespace: task-list-devops
 spec:
   replicas: 1
   selector:
@@ -41,6 +36,6 @@ spec:
     spec:
       containers:
         - name: backend
-          image: pfabianofilho/back-lista-tarefas:v1
+          image: paulofabianoo/task-list-backend
           ports:
             - containerPort: 8080
