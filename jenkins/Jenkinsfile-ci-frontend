@@ -10,6 +10,8 @@ pipeline {
     environment {
         REPOSITORY_DOCKER_HUB   =   'paulofabianoo'
         APPLICATION_NAME        =   'task-list-frontend'
+        IMAGE_NAME              =   "${env.REPOSITORY_DOCKER_HUB}/${APPLICATION_NAME}:${APPLICATION_VERSION}"
+        IMAGE_LATEST            =   "${env.REPOSITORY_DOCKER_HUB}/${APPLICATION_NAME}:latest" 
     }
 
     stages {
@@ -20,9 +22,6 @@ pipeline {
 
                 script {
 
-                    def APPLICATION_VERSION = "${currentBuild.number}"
-                    def IMAGE_NAME          = "${env.REPOSITORY_DOCKER_HUB}/${APPLICATION_NAME}:${APPLICATION_VERSION}"
-                    def IMAGE_LATEST        = "${env.REPOSITORY_DOCKER_HUB}/${APPLICATION_NAME}:latest"
 
                     sh """
                         cd frontend
