@@ -16,39 +16,29 @@ pipeline {
 
     stages {
 
-        stage('Build Frontend') { 
-            
+        stage('Build Frontend') {      
             steps {
-
                 script {
-
-
                     sh """
                         cd frontend
                         docker build -t ${IMAGE_NAME} .
                         docker tag ${IMAGE_NAME} ${IMAGE_LATEST}
                     """
                 }
-
-            }
-            
+            }     
         }
         
         stage('Push image') {
-
             steps {
-
                 withCredentials([
                     usernamePassword(credentialsId: 'docker-hub-login', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')
                 ]) {
-
                     script {
                         sh """
-                            docker login -u ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+                            echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
                             docker push ${IMAGE_NAME} && docker push ${IMAGE_LATEST}
                         """
                     }
-
                 }
             }
         }
